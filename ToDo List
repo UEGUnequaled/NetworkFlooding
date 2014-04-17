@@ -4,8 +4,13 @@
 4. Add user tags to messages (and maybe timestamps)
 5. give option to close connection with a command
 6. display ips of all connections (server and clients)
+7. when client connect, send client a welcome message
 
 Optional: 
 1. make mod rights and make a ban command
 2. give server abilities to send out messages as well (server warnings, etc)
+
+
+Super duper optional:
+1. let server sniff all ports and automatically connect clients
 
