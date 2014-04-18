@@ -1,5 +1,5 @@
 1. Keep socket connection between client and server alive
-2. allow for multiple connections
+2. DONE - allow for multiple connections
 3. Broadcast all incoming messages to all connected clients on same network
 4. Add user tags to messages (and maybe timestamps)
 5. give option to close connection with a command
