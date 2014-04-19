@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <stdlib.h>
+#include <time.h>
 
 //If system calls goes wrong, we terminate client
 void error(char *msg)
@@ -42,22 +43,31 @@ int main(int argc, char *argv[])
     serv_addr.sin_port = htons(portno);
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
     {
-        error("ERROR connecting");
+        error("ERROR with connecting");
     }
-    printf("Please enter the message: ");
-    bzero(buffer,256);
-    fgets(buffer,255,stdin);
-    n = write(sockfd,buffer,strlen(buffer));
-    if (n < 0)
-    { 
-    	error("ERROR writing to socket");
-   	}
-    bzero(buffer,256);
-    n = read(sockfd,buffer,300);
-    if (n < 0)
+   	//infinite loop until we exit (will implement later)
+    while(1)
     {
-         error("ERROR reading from socket");
+    	//display localtime and current user
+    	printf("%s: "getenv("USER"));
+    	bzero(buffer,256);
+    	fgets(buffer,255,stdin);
+    	n = write(sockfd,buffer,strlen(buffer));
+    	if (n < 0)
+   	 	{ 
+   	 		error("ERROR writing to socket");
+   		}
+	    bzero(buffer,256);
+	    n = read(sockfd,buffer,300);
+	   	if (n < 0)
+    	{	
+        	 error("ERROR reading from socket");
+    	}
+    	//get local time
+    	time_t currtime = time(NULL);
+    	//display buffer from server with timestamp
+    	printf("%s:%s\n",asctime(localtime(&currtime)), buffer);
     }
-    printf("%s\n",buffer);
+    /*we should never exit here unless we input an exit func*/
     return 0;
 }
