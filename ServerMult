@@ -8,8 +8,9 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "ServerMult.h"
 
-void dostuff(int); /* function prototype */
+//If system calls goes wrong, we terminate server
 void error(char *msg)
 {
     perror(msg);
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
  for each connection.  It handles all communication
  once a connnection has been established.
  *****************************************/
-void dostuff (int sock)
+void readfromclient (int sock)
 {
    int n;
    char buffer[256];
