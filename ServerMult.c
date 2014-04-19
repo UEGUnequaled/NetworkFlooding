@@ -8,7 +8,6 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <time.h>
 #include "ServerMult.h"
 
 //If system calls goes wrong, we terminate server
@@ -18,6 +17,7 @@ void error(char *msg)
     exit(1);
 }
 
+//main function for handling client connections
 int main(int argc, char *argv[])
 {
      int sockfd, newsockfd, portno, clilen, pid;
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
      {
      	error("ERROR on binding");
      }
+     printf("Server started\n");
      listen(sockfd,5);
      clilen = sizeof(cli_addr);
      while (1) 
@@ -67,6 +68,7 @@ int main(int argc, char *argv[])
          	close(newsockfd);
          }
      } /* end of while */
+     printf("Server closed\n");
      return 0; /* we never get here */
 }
 
@@ -87,8 +89,7 @@ void readfromclient (int sock)
       error("ERROR reading from socket");
    }
    printf("Read: %s\n",buffer);
-   time_t cur = time(NULL);
-   n = write(sock,"%s%s\n",asctime(localtime(&cur)),255);
+   n = write(sock,"%s\n",255);
    if (n < 0) 
    {
       error("ERROR writing to socket");
